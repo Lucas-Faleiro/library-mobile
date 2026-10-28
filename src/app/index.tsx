@@ -1,9 +1,17 @@
-import { Text, View } from "react-native";
+import { SafeAreaView } from "@/ui";
+import { Ionicons } from "@react-native-vector-icons/ionicons";
+import { router } from "expo-router";
+import { Pressable } from "react-native";
 
 export default function Index() {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="font-bold">Edit src/app/index.tsx to edit this screen.</Text>
-    </View>
+    <SafeAreaView className="flex-1 items-center justify-center bg-slate-50">
+      <Pressable
+        onPress={() => router.push("/scanner")}
+        className="h-28 w-28 items-center justify-center rounded-3xl bg-indigo-600 shadow-lg active:scale-95 active:opacity-80"
+      >
+        <Ionicons name="camera" size={50} color="white" />
+      </Pressable>
+    </SafeAreaView>
   );
 }
