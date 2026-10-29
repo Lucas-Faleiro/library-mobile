@@ -1,5 +1,6 @@
 import { CameraView, SafeAreaView } from "@/ui";
 import { useCameraPermissions } from "expo-camera";
+import { router } from "expo-router";
 import { useEffect } from "react";
 
 export default function Scanner() {
@@ -17,7 +18,8 @@ export default function Scanner() {
       <CameraView
         className="flex-1"
         facing="back"
-        // onBarcodeScanned={(data) => console.log("data", data)}
+        onBarcodeScanned={(data) => router.replace(`/books/${data.data}`)}
+        barcodeScannerSettings={{ barcodeTypes: ["ean13"] }}
       />
     </SafeAreaView>
   );
