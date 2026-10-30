@@ -1,3 +1,6 @@
+import CameraOverlay, {
+  isBarcodeInsideScanBox,
+} from "@/components/CameraOverlay";
 import { CameraView, SafeAreaView } from "@/ui";
 import { useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
@@ -5,7 +8,6 @@ import { useEffect } from "react";
 
 export default function Scanner() {
   const [permission, requestPermission] = useCameraPermissions();
-  const isPermissionGranted = permission?.granted;
 
   useEffect(() => {
     if (permission && !permission.granted && permission.canAskAgain) {
@@ -18,9 +20,14 @@ export default function Scanner() {
       <CameraView
         className="flex-1"
         facing="back"
-        onBarcodeScanned={(data) => router.replace(`/books/${data.data}`)}
+        onBarcodeScanned={(data) => {
+          if (isBarcodeInsideScanBox(data)) {
+            router.replace(`/books/${data.data}`);
+          }
+        }}
         barcodeScannerSettings={{ barcodeTypes: ["ean13"] }}
       />
+      <CameraOverlay />
     </SafeAreaView>
   );
 }
